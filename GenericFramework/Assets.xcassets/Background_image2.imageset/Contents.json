@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "DALL·E 2023-11-25 17.53.44 - A serene, peaceful setting with a tranquil lake and a clear blue sky, reflecting the idea of inner peace and tranquility through meditation. The scene.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "DALL·E 2023-11-25 17.53.44 - A serene, peaceful setting with a tranquil lake and a clear blue sky, reflecting the idea of inner peace and tranquility through meditation. The scene 1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "DALL·E 2023-11-25 17.53.44 - A serene, peaceful setting with a tranquil lake and a clear blue sky, reflecting the idea of inner peace and tranquility through meditation. The scene 2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

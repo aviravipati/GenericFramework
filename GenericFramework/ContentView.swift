@@ -10,76 +10,112 @@ import CoreData
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @State private var showGreetingScreen = true
+        var body: some View {
+            if !UserDefaults.standard.bool(forKey: "HasShownGreetingScreen_for_app_GenericFramework") &&
+                self.showGreetingScreen
+            {
+                GreetingScreen(showGreetingScreen: $showGreetingScreen)
+            } else {
+                MainScreen()
+            }
+        }
+    }
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
+
+struct GreetingScreen: View {
+    @Binding var showGreetingScreen: Bool
+    @State private var count = 1
+    var titlesAndSubtitles: [(title: String, subtitle: String)] = [("Discover Inner Peace", "Experience Tranquility Through Meditation"),("Stress Relief Anytime, Anywhere","Find Calmness in the Midst of Chaos"),("Guided Meditations for All","Journey to Mindfulness with Expert Instructors") ]
 
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
-                    }
+        GeometryReader { geometry in
+            VStack {
+                    ZStack {
+                        Image("Background_image\(count)")
+                            .resizable()
+                            .scaledToFill()
+                            .cornerRadius(22)
+                            .clipped()
+                    
+                        HStack{
+                           Spacer()
+                        
+                        VStack {
+                           
+                            Button(action: {
+                                UserDefaults.standard.set(true, forKey: "HasShownGreetingScreen_for_app_GenericFramework")
+                                self.showGreetingScreen = false
+                            }, label: {
+                                Text("Skip")
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.black)
+
+                            })
+                           
+                          
+                            Spacer() // Pushes the button to the top
+                            }
+                        }
+                        .padding(.horizontal, 100)
+                        .padding(.vertical, 50)
+                }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 300)
+
+                Spacer()
+                if self.count <= 3 {
+                    Text(titlesAndSubtitles[count-1].title)
+                        .font(.title2)
+                    Text(titlesAndSubtitles[count-1].subtitle)
+                        .font(.footnote)
+                        .foregroundColor(.gray)
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+                HStack(spacing:5){
+                    
+                    Circle()
+                        .frame(width: 5,  height: 5)
+                        .foregroundColor(count==1 ? .black : .gray)
+                    Circle()
+                        .frame(width: 5 , height: 5)
+                        .foregroundColor(count==2 ? .black : .gray)
+                    Circle()
+                        .frame(width: 5 , height: 5)
+                        .foregroundColor(count==3 ? .black : .gray)
                 }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
-        }
-    }
+                    
+                Spacer()
+                
+                    Button(action: {
+                        self.count += 1
+                        if self.count > 3 {
+                            UserDefaults.standard.set(true, forKey: "HasShownGreetingScreen_for_app_GenericFramework")
+                            self.showGreetingScreen = false
+                        }
+                    }, label: {
+                        
+                        Text(self.count == 3 ? "Get Started" : "Continue")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            .frame(width: 300, height: 50)
+                            .background(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .fill(Color.blue)
+                            )
+                    })
+                    .padding(.bottom, 40) // Adjust the spacing from the wave shape as needed
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+               
             }
         }
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
+
+    struct MainScreen: View {
+        var body: some View {
+            Text("Main Content")
+        }
+    }
 
 #Preview {
     ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)

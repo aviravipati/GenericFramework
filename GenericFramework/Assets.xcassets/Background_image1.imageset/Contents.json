@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "DALL·E 2023-11-11 22.43.14 - A serene and calming background suitable for a reminder app's welcome screen. The image should be composed of softer hue colors, creating a sense of c.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "DALL·E 2023-11-11 22.43.14 - A serene and calming background suitable for a reminder app's welcome screen. The image should be composed of softer hue colors, creating a sense of c 1.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "DALL·E 2023-11-11 22.43.14 - A serene and calming background suitable for a reminder app's welcome screen. The image should be composed of softer hue colors, creating a sense of c 2.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
