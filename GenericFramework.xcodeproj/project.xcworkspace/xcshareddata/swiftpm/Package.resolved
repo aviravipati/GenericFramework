@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "superwall-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/superwall-me/Superwall-iOS",
+      "state" : {
+        "revision" : "331a71fec50524e7bd87e8c9d3b3c1462eade029",
+        "version" : "3.4.4"
+      }
+    }
+  ],
+  "version" : 2
+}

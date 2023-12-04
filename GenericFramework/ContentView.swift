@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import SuperwallKit
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -113,7 +114,20 @@ struct GreetingScreen: View {
 
     struct MainScreen: View {
         var body: some View {
-            Text("Main Content")
+            VStack{
+                Text("Thank you")
+                    .font(.title)
+                Spacer()
+                    .frame(height:200)
+                Button(action: {
+                    Superwall.shared.register(event: "campaign_trigger")
+                }, label: {
+                    Text("Try Premium")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.blue)
+                })
+
+            }
         }
     }
 
